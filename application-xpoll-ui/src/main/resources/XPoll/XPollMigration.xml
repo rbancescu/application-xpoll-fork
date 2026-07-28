@@ -142,7 +142,7 @@
     <property>
       <code>require(['jquery', 'xwiki-meta'], function ($, xwikiMeta) {
   $(function() {
-    $('.xpoll-migration-warning a').click(function(event) {
+    $('.xpoll-migration-warning a').on('click', function(event) {
       event.preventDefault();
       var warningDiv = $('.xpoll-migration-warning');
       var progressNotification = new XWiki.widgets.Notification($jsontool.serialize($services.localization.render('xpoll.migration.inProgress')), 'inprogress');
