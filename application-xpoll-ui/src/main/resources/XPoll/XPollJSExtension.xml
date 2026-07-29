@@ -125,7 +125,18 @@
       <cache>long</cache>
     </property>
     <property>
-      <code>require(['jquery'], function ($) {
+      <code>define('xpoll-vote-messages', {
+  prefix: 'contrib.xpoll.vote.',
+  keys: [
+    'saving',
+    'saved',
+    'failed',
+    'failed.forbidden',
+    'failed.guestEmpty'
+  ]
+});
+
+require(['jquery', "xwiki-l10n!xpoll-vote-messages"], function ($, l10n) {
   $(document).ready(function() {
     var saveForm = $('#xpollSaveForm');
     var submitInput = saveForm.find("input[type='submit']");
@@ -148,35 +159,26 @@
         data: JSON.stringify(jsonForm),
         contentType: "application/json; charset=utf-8",
         beforeSend: function() {
-          this.progressNotification = new XWiki.widgets.Notification("$services.localization.render('contrib.xpoll.vote.saving')", 'inprogress');
+          this.progressNotification = new XWiki.widgets.Notification(l10n.get('saving'), 'inprogress');
         },
         success: function(data) {
-          this.progressNotification.replace(new XWiki.widgets.Notification("$services.localization.render('contrib.xpoll.vote.saved')", 'done'));
+          this.progressNotification.replace(new XWiki.widgets.Notification(l10n.get('saved'), 'done'));
           // Reload just the form with the id="xpollSaveForm" which contains the table.
           $('#xpollSaveForm').load(XWiki.currentDocument.getURL('get') +  ' #xpollSaveForm&gt;*');
         },
         error: function(data) {
           if (data.status == 403) {
             this.progressNotification.replace(
-              new XWiki.widgets.Notification(
-                "$services.localization.render('contrib.xpoll.vote.failed.forbidden')",
-                'error'
-              )
+              new XWiki.widgets.Notification(l10n.get('failed.forbidden'), 'error')
             );
           } else if (data.status == 400) {
-              this.progressNotification.replace(
-                new XWiki.widgets.Notification(
-                  "$services.localization.render('contrib.xpoll.vote.failed.guestEmpty')",
-                  'error'
-                )
-              );
+            this.progressNotification.replace(
+              new XWiki.widgets.Notification(l10n.get('failed.guestEmpty'), 'error')
+            );
           } else {
-              this.progressNotification.replace(
-                new XWiki.widgets.Notification(
-                  "$services.localization.render('contrib.xpoll.vote.failed', 'HTTP Error')",
-                  'error'
-                )
-              );
+            this.progressNotification.replace(
+              new XWiki.widgets.Notification(l10n.get('failed', ['HTTP Error']), 'error')
+            );
           }
         }
       });

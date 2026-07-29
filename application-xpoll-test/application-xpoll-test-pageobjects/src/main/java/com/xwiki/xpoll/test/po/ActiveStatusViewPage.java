@@ -22,9 +22,9 @@ package com.xwiki.xpoll.test.po;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.xwiki.test.ui.po.ViewPage;
 
 /**
@@ -35,11 +35,11 @@ public class ActiveStatusViewPage extends ViewPage
     @FindBy(xpath = "//div[@id = 'xwikicontent']/p")
     public WebElement pollDescription;
 
-    public List<WebElement> proposals = getDriver().findElements(
-        By.xpath("//table[contains(@class, 'xpoll')]//tr[1]//th[position()>1]"));
+    @FindBy(xpath = "//table[contains(@class, 'xpoll')]//tr[1]//th[position()>1]")
+    public List<WebElement> proposals;
 
-    public List<WebElement> proposalVoteInputs = getDriver().findElements(
-        By.xpath("//table[contains(@class, 'xpoll')]//tr[contains(@class, 'polls-active')]//input"));
+    @FindBy(xpath = "//table[contains(@class, 'xpoll')]//tr[contains(@class, 'polls-active')]//input")
+    public List<WebElement> proposalVoteInputs;
 
     @FindBy(xpath = "//div[contains(@class, 'save')]/input")
     public WebElement saveButton;
