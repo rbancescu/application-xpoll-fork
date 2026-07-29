@@ -169,24 +169,15 @@ require(['jquery', "xwiki-l10n!xpoll-vote-messages"], function ($, l10n) {
         error: function(data) {
           if (data.status == 403) {
             this.progressNotification.replace(
-              new XWiki.widgets.Notification(
-                l10n.get('failed.forbidden'),
-                'error'
-              )
+              new XWiki.widgets.Notification(l10n.get('failed.forbidden'), 'error')
             );
           } else if (data.status == 400) {
             this.progressNotification.replace(
-              new XWiki.widgets.Notification(
-                l10n.get('failed.guestEmpty'),
-                'error'
-              )
+              new XWiki.widgets.Notification(l10n.get('failed.guestEmpty'), 'error')
             );
           } else {
             this.progressNotification.replace(
-              new XWiki.widgets.Notification(
-                l10n.get('failed', ['HTTP Error']),
-                'error'
-              )
+              new XWiki.widgets.Notification(l10n.get('failed', ['HTTP Error']), 'error')
             );
           }
         }
